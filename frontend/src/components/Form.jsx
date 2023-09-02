@@ -1,34 +1,42 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState } from "react"
+import axios from "axios"
 
 function Form({ setFilesDisplay }) {
-  const [files, setFiles] = useState([]);
-  const [name, setName] = useState("");
+  const [files, setFiles] = useState([])
+  const [name, setName] = useState("")
 
   const handleForm = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const formData = new FormData();
+    const formData = new FormData()
 
-    formData.append("file", files[0]);
-    formData.append("name", name);
+    formData.append("file", files[0])
+    formData.append("name", name)
 
     axios
       .post("http://localhost:8000/image", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then(() => setFilesDisplay([]));
-  };
+      .then(() => setFilesDisplay([]))
+  }
 
   return (
     <form onSubmit={handleForm} className="w-40">
       <div style={{ textAlign: "center" }}>
-        {files.length && (
-          <img
-            style={{ height: "12rem" }}
-            src={URL.createObjectURL(files[0])}
-          />
-        )}
+        <div
+          style={{
+            height: "12rem",
+            backgroundColor: "lightgray",
+            marginBottom: "1rem",
+          }}
+        >
+          {Boolean(files.length) && (
+            <img
+              style={{ height: "12rem" }}
+              src={URL.createObjectURL(files[0])}
+            />
+          )}
+        </div>
       </div>
       <div className="form-group mb-2">
         <label htmlFor="inputName">Nom</label>
@@ -53,7 +61,7 @@ function Form({ setFilesDisplay }) {
         Envoyer
       </button>
     </form>
-  );
+  )
 }
 
-export default Form;
+export default Form
